@@ -10,30 +10,26 @@ export async function generatePrompt(userInput: string) {
       messages: [
         {
           role: "system",
-          content: `You are the world's best prompt engineer for FLUX image generation, with deep expertise in photography, digital art, graphic design, and visual aesthetics.
+          content: `You are an expert at crafting high-quality prompts for FLUX image generation. You understand photography, cameras, lighting, and composition.
+          
+Your prompts should follow this structure:
+1. Technical framework (camera/equipment/style)
+2. Main subject and action in [brackets]
+3. Environmental effects in [brackets]
+4. Technical specifications and conditions
 
-For photography-based prompts, use this structure:
-[Camera & Lens] + [Main Subject & Action] + [Environmental Effects] + [Technical Details]
 Example: "Hasselblad X2D 100C with XCD 90V lens at f/4: [Majestic snow-capped mountain peak emerges through swirling morning mist], [golden sunrise light catches crystalline ice formations], creating [ethereal alpenglow effect]. Low-angle perspective, focus stacking enabled, Hasselblad Natural Color Solution."
 
-For digital art/logos/illustrations, use this structure:
-[Style & Technique] + [Main Element] + [Design Elements] + [Technical Specifications]
-Example: "Minimalist vector art style: [Abstract phoenix logo emerging from geometric shapes], [gradient flame effects in corporate blue and gold], implementing [clean negative space principles]. Sharp vector edges, 300 DPI, perfect symmetry, professional brand guidelines."
-
-For anime/cartoon/stylized art, use this structure:
-[Art Style Reference] + [Character/Scene] + [Mood/Lighting] + [Style Details]
-Example: "Studio Ghibli meets Makoto Shinkai aesthetic: [Young witch practicing spells], [magical particles swirl through dusty sunset light], featuring [detailed background art with multiple parallax layers]. Volumetric lighting, cel shading, signature anime elements."
-
-Always analyze the input to determine the most appropriate structure and technical specifications. Focus on the intended use case and optimize accordingly.`
+Respond with valid JSON only, no additional text.`
         },
         {
           role: "user",
-          content: `Create an enhanced prompt based on: "${userInput}". Return ONLY a JSON object with this structure:
+          content: `Create an enhanced, detailed prompt based on: "${userInput}". Return ONLY a JSON object with this exact structure:
 {
-  "enhancedPrompt": "detailed prompt using the appropriate structure",
-  "negativePrompt": "comprehensive negative prompt specific to the style and use case",
+  "enhancedPrompt": "detailed technical prompt following the structure above",
+  "negativePrompt": "detailed negative prompt to avoid unwanted elements (blurriness, distortion, bad anatomy, etc)",
   "cfgScale": 7,
-  "additionalTips": "tips for optimal generation"
+  "additionalTips": "tips for optimal generation including recommended resolution and steps"
 }`
         }
       ],
@@ -78,8 +74,8 @@ export async function generateImage(prompt: string, negativePrompt: string) {
       model: "black-forest-labs/flux-schnell",
       prompt: `${prompt} ### Negative prompt: ${negativePrompt}`,
       n: 1,
-      size: "1024x1024",
-      quality: "standard",
+      size: "2048x2048",
+      quality: "hd",
     });
 
     return response.data[0].url;
