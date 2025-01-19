@@ -19,7 +19,7 @@ export default function Home() {
           FLUX Prompt Generator
         </h1>
         <p className="text-center text-muted-foreground">
-          Create enhanced prompts for AI image generation using the power of Llama 3.3
+          100X your image generation with FLUX with smart prompting
         </p>
         <PromptGenerator />
       </div>
