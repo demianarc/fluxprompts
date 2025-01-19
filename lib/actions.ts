@@ -72,9 +72,9 @@ export async function generateImage(prompt: string, negativePrompt: string) {
   try {
     const response = await openai.images.generate({
       model: "black-forest-labs/flux-schnell",
-      prompt: `${prompt} ### Negative prompt: ${negativePrompt}`,
+      prompt: `${prompt} ### Negative prompt: ${negativePrompt} ### Steps: 50`,
       n: 1,
-      size: "2048x2048",
+      size: "2000x2000",
       quality: "hd",
     });
 
